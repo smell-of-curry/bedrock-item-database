@@ -3,16 +3,16 @@
   "header": {
     "name": "pack.name",
     "description": "pack.description",
-    "min_engine_version": [1, 21, 60],
+    "min_engine_version": [1, 21, 70],
     "uuid": "1d923b11-cedf-4e68-a959-aca94c9a5c6c",
-    "version": [1, 0, 0]
+    "version": [1, 1, 0]
   },
   "modules": [
     {
       "description": "Data Module",
       "type": "data",
       "uuid": "5ee07fae-63a1-4bbb-9625-306632b4e981",
-      "version": [1, 0, 0]
+      "version": [1, 1, 0]
     },
     {
       "description": "Script API Module",
@@ -27,7 +27,7 @@
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "1.18.0-beta"
+      "version": "2.0.0-beta"
     }
   ],
   "metadata": {

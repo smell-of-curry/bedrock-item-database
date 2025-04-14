@@ -1,5 +1,5 @@
 import { world } from "@minecraft/server";
-import { DIMENSIONS } from "../../utils";
+import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 
 /**
  * Callbacks that are called when the entities are loaded
@@ -24,9 +24,9 @@ function setEntitiesLoaded() {
   }
 }
 
-world.afterEvents.worldInitialize.subscribe(async () => {
+world.afterEvents.worldLoad.subscribe(async () => {
   try {
-    const data = await DIMENSIONS.overworld.runCommandAsync(`testfor @e`);
+    const data = world.getDimension(MinecraftDimensionTypes.Overworld).runCommand(`testfor @e`);
     if (!data.successCount) throw new Error("Entities Not Loaded");
     setEntitiesLoaded();
   } catch (error) {

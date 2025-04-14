@@ -61,7 +61,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
     // Await for entities to be loaded to ensure we can fetch them.
     EntitiesLoad.subscribe(async () => {
       // Register Ticking area so we can for sure load entities.
-      await ENTITY_DIMENSION.runCommandAsync(
+      ENTITY_DIMENSION.runCommand(
         `tickingarea add ${ItemDatabase.getEntityBoundingBox()} itemDatabase true`
       );
 
@@ -117,7 +117,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
 
     const databaseEntities: Entity[] = [];
     for (const entity of entities) {
-      if (!entity.isValid()) continue;
+      if (!entity.isValid) continue;
       if (entity.getDynamicProperty("databaseTypeId") != this.typeId) continue;
 
       // Valid Entity used for this database
@@ -142,11 +142,11 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
 
     const itemStacks: ItemStack[] = [];
     for (const entity of this.databaseEntities) {
-      if (!entity.isValid()) continue;
+      if (!entity.isValid) continue;
       const inventory = entity.getComponent("inventory");
-      if (!inventory || !inventory.isValid()) continue;
+      if (!inventory || !inventory.isValid) continue;
       const inventoryContainer = inventory.container;
-      if (!inventoryContainer || !inventoryContainer.isValid()) continue;
+      if (!inventoryContainer || !inventoryContainer.isValid) continue;
 
       for (let i = 0; i < inventory.inventorySize; i++) {
         const itemStack = inventoryContainer.getItem(i);
@@ -175,7 +175,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
     // Try catch as, we should still wipe catch even if this errors.
     try {
       for (const entity of this.databaseEntities) {
-        if (!entity.isValid()) continue;
+        if (!entity.isValid) continue;
         entity.remove();
       }
     } catch (error) {
@@ -279,11 +279,11 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
     // Find a entity to put the item on.
     let addedItem = false;
     for (const entity of this.databaseEntities) {
-      if (!entity.isValid()) continue;
+      if (!entity.isValid) continue;
       const inventory = entity.getComponent("inventory");
-      if (!inventory || !inventory.isValid()) continue;
+      if (!inventory || !inventory.isValid) continue;
       const inventoryContainer = inventory.container;
-      if (!inventoryContainer || !inventoryContainer.isValid()) continue;
+      if (!inventoryContainer || !inventoryContainer.isValid) continue;
       if (inventoryContainer.emptySlotsCount == 0) continue;
 
       inventoryContainer.addItem(itemStack);
@@ -303,7 +303,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
       await system.waitTicks(10);
 
       // Shouldn't happen, but could if there is some type of entity clearing.
-      if (!entity.isValid())
+      if (!entity.isValid)
         throw new Error(`Failed to spawn entity of typeId "${ENTITY_TYPEID}"!`);
 
       // Register this entity as in use for this database.
@@ -311,13 +311,13 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
 
       // Check if inventory is valid.
       const inventory = entity.getComponent("inventory");
-      if (!inventory || !inventory.isValid())
+      if (!inventory || !inventory.isValid)
         throw new Error(
           `Could not add ItemStack, Entity does not have a valid Inventory Component!`
         );
 
       const inventoryContainer = inventory.container;
-      if (!inventoryContainer || !inventoryContainer.isValid())
+      if (!inventoryContainer || !inventoryContainer.isValid)
         throw new Error(
           `Could not add ItemStack, Entity's container is not valid!`
         );
@@ -378,11 +378,11 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
     if (this.databaseEntities == undefined) return false;
 
     for (const entity of this.databaseEntities) {
-      if (!entity.isValid()) continue;
+      if (!entity.isValid) continue;
       const inventory = entity.getComponent("inventory");
-      if (!inventory || !inventory.isValid()) continue;
+      if (!inventory || !inventory.isValid) continue;
       const inventoryContainer = inventory.container;
-      if (!inventoryContainer || !inventoryContainer.isValid()) continue;
+      if (!inventoryContainer || !inventoryContainer.isValid) continue;
 
       for (let i = 0; i < inventory.inventorySize; i++) {
         const itemStack = inventoryContainer.getItem(i);
