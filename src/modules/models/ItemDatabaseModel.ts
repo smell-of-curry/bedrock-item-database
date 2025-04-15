@@ -61,9 +61,11 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
     // Await for entities to be loaded to ensure we can fetch them.
     EntitiesLoad.subscribe(async () => {
       // Register Ticking area so we can for sure load entities.
-      ENTITY_DIMENSION.runCommand(
-        `tickingarea add ${ItemDatabase.getEntityBoundingBox()} itemDatabase true`
-      );
+      world
+        .getDimension(ENTITY_DIMENSION)
+        .runCommand(
+          `tickingarea add ${ItemDatabase.getEntityBoundingBox()} itemDatabase true`
+        );
 
       // Wait for a few ticks to ensure the entities are loaded.
       // This is important because the ticking area might take a bit to register.
@@ -109,7 +111,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
    * Fetches entities from the database.
    */
   private fetchEntities(): Entity[] {
-    const entities = ENTITY_DIMENSION.getEntities({
+    const entities = world.getDimension(ENTITY_DIMENSION).getEntities({
       type: ENTITY_TYPEID,
       location: ENTITY_LOCATION,
       maxDistance: 2, // Ensure even if they have moved a bit.
@@ -296,7 +298,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
       // we must make a new entity to store this new item.
 
       // Spawn entity and wait ticks to ensure it is loaded.
-      const entity = ENTITY_DIMENSION.spawnEntity(
+      const entity = world.getDimension(ENTITY_DIMENSION).spawnEntity(
         ENTITY_TYPEID,
         ENTITY_LOCATION
       );
