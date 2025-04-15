@@ -83,26 +83,24 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
       console.log(`Fetched ${items.length}x item(s) for ${this.typeId}!`);
     });
 
-    world.beforeEvents.entityRemove.subscribe(({ removedEntity }) => {
+    world.afterEvents.entityRemove.subscribe(({ removedEntityId }) => {
       // Check if the entity is one of our database entities
       if (!this.databaseEntities) return;
       const isDatabaseEntity = this.databaseEntities.find(
-        (entity) => entity.id == removedEntity.id
+        (entity) => entity.id == removedEntityId
       );
       if (!isDatabaseEntity) return;
 
       // Something caused this entity to be removed! Not good!
       console.error(
         `Entity of typeId "${ENTITY_TYPEID}", and ID "${
-          removedEntity.id
-        }" was removed at location: ${JSON.stringify(
-          removedEntity.location
-        )}. This can result in a serious loss of data!`
+          removedEntityId
+        }" was removed at location. This can result in a serious loss of data!`
       );
 
       // Remove this entity from the database entities, as we dont want to fetch broken entities.
       this.databaseEntities = this.databaseEntities.filter(
-        (entity) => entity.id != removedEntity.id
+        (entity) => entity.id != removedEntityId
       );
     });
   }
