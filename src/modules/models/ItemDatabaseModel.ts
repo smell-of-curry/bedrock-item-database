@@ -395,15 +395,16 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
 
           // Set item at slot to undefined
           inventoryContainer.setItem(i);
-          if (this.cachedItems == undefined) return true;
-
-          // Clear item from cached slot
-          this.cachedItems = this.cachedItems.filter((cachedItem) => {
-            const cachedItemId = this.getItemId(cachedItem);
-            if (!cachedItemId) return true; // Remove invalid items
-
-            return cachedItemId !== id;
-          });
+          
+          // Update cached items if they exist
+          if (this.cachedItems) {
+            this.cachedItems = this.cachedItems.filter((cachedItem) => {
+              const cachedItemId = this.getItemId(cachedItem);
+              if (!cachedItemId) return false; // Remove invalid items
+              return cachedItemId !== id;
+            });
+          }
+          
         } catch (error) {
           console.warn(`Failed to remove item: ${error}`);
           continue;
