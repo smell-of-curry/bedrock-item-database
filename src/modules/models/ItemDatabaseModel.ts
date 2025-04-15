@@ -405,6 +405,8 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
             });
           }
           
+          // Successfully removed the item
+          return true;
         } catch (error) {
           console.warn(`Failed to remove item: ${error}`);
           continue;
