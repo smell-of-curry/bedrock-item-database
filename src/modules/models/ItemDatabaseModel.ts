@@ -391,7 +391,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
         try {
           const itemId = this.getItemId(itemStack);
           if (!itemId) continue;
-          if (itemId != id) continue;
+          if (itemId !== id) continue;
 
           // Set item at slot to undefined
           inventoryContainer.setItem(i);
