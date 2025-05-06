@@ -1,4 +1,3 @@
-import { world } from "@minecraft/server";
 import { MinecraftDimensionTypes } from "@minecraft/vanilla-data";
 
 /**
