@@ -8,14 +8,17 @@ const testItemDB = new ItemDatabase("testItems");
 
 // Push item to database when used
 world.afterEvents.itemUse.subscribe(async ({ itemStack, source }) => {
+  const usedSlot = source.selectedSlotIndex; // Get slot, to ensure they don't move there cursor.
   const id = Date.now().toString();
   const setStatus = await testItemDB.setItem(itemStack, { id });
   if (!setStatus) {
-    source.sendMessage(`§cFailed to push item to database`);
+    source.onScreenDisplay.setActionBar(`§cFailed to push item to database`);
     source.playSound("random.bass");
     return;
   }
-  source.sendMessage(`§aItem pushed to database with id: ${id}`);
+  source.onScreenDisplay.setActionBar(
+    `§aItem §dpushed§a to database with id: ${id}`
+  );
   source.playSound("random.pop");
 
   // Remove item from inventory
@@ -23,7 +26,7 @@ world.afterEvents.itemUse.subscribe(async ({ itemStack, source }) => {
   if (!inventoryComponent) return;
   const inventoryContainer = inventoryComponent.container;
   if (!inventoryContainer) return;
-  inventoryContainer.setItem(source.selectedSlotIndex, undefined);
+  inventoryContainer.setItem(usedSlot, undefined);
 
   // Wait a second
   await system.waitTicks(TicksPerSecond);
@@ -31,15 +34,17 @@ world.afterEvents.itemUse.subscribe(async ({ itemStack, source }) => {
   // Add item back to inventory from database
   const item = testItemDB.getItem(id);
   if (!item) {
-    source.sendMessage(
+    source.onScreenDisplay.setActionBar(
       `§cFailed to retrieve item from database with id: ${id}`
     );
     source.playSound("random.bass");
     return;
   }
-  source.sendMessage(`§aItem retrieved from database with id: ${id}`);
-  inventoryContainer.setItem(source.selectedSlotIndex, item);
-  source.playSound("random.ping");
+  source.onScreenDisplay.setActionBar(
+    `§aItem §eretrieved§a from database with id: ${id}`
+  );
+  inventoryContainer.setItem(usedSlot, item);
+  source.playSound("random.orb");
 
   // Wait a second
   await system.waitTicks(TicksPerSecond);
@@ -47,7 +52,9 @@ world.afterEvents.itemUse.subscribe(async ({ itemStack, source }) => {
   // Remove item from database
   const removeStatus = await testItemDB.removeItem(id);
   if (!removeStatus) {
-    source.sendMessage(`§cFailed to remove item from database with id: ${id}`);
+    source.onScreenDisplay.setActionBar(
+      `§cFailed to remove item from database with id: ${id}`
+    );
     source.playSound("random.bass");
     return;
   }
@@ -55,12 +62,14 @@ world.afterEvents.itemUse.subscribe(async ({ itemStack, source }) => {
   // Confirm item removal
   const itemRemoved = testItemDB.getItem(id);
   if (itemRemoved) {
-    source.sendMessage(
+    source.onScreenDisplay.setActionBar(
       `§cFailed to confirm item removal from database with id: ${id}`
     );
     source.playSound("random.bass");
     return;
   }
-  source.sendMessage(`§aItem removed from database with id: ${id}`);
-  source.playSound("random.pop");
+  source.onScreenDisplay.setActionBar(
+    `§aItem §cremoved§a from database with id: ${id}`
+  );
+  source.playSound("random.break");
 });
