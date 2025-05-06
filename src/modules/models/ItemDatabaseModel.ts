@@ -296,7 +296,7 @@ export class ItemDatabase<IdentifierData extends ItemDatabaseItemStackData> {
       // we must make a new entity to store this new item.
 
       // Spawn entity and wait ticks to ensure it is loaded.
-      const entity = world.getDimension(ENTITY_DIMENSION).spawnEntity(
+      const entity = world.getDimension(ENTITY_DIMENSION).spawnEntity<string>(
         ENTITY_TYPEID,
         ENTITY_LOCATION
       );
