@@ -20,3 +20,8 @@ export const ENTITY_DIMENSION = MinecraftDimensionTypes.Overworld;
  * The prefix to put on items in the database.
  */
 export const ITEM_PREFIX = "!!:";
+
+/**
+ * The size of the inventory of the database entity.
+ */
+export const ENTITY_INVENTORY_SIZE = 200;

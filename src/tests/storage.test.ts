@@ -1,5 +1,5 @@
 import { TicksPerSecond, system, world } from "@minecraft/server";
-import { ItemDatabase } from "../modules/models/ItemDatabaseModel";
+import { ItemDatabase } from "../models/ItemDatabaseModel";
 
 /**
  * The item database to do tests on

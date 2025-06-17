@@ -17,17 +17,22 @@
     "url": "git+https://github.com/smell-of-curry/bedrock-item-database.git"
   },
   "overrides": {
-    "@minecraft/server": "2.0.0-beta.1.21.80-stable"
+    "@minecraft/server": "2.1.0-beta.1.21.90-stable"
   },
   "dependencies": {
-    "@minecraft/vanilla-data": "1.21.80",
+    "@minecraft/vanilla-data": "1.21.90",
     "@minecraft/common": "1.2.0",
-    "@minecraft/math": "2.2.4"
+    "@minecraft/math": "2.2.6"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "esbuild": "^0.15.18",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^10.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
+    "eslint-plugin-minecraft-linting": "^2.0.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint": "^9.28.0"
   },
   "license": "ISC",
   "author": "Smell of curry",
@@ -35,6 +40,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "ts-node --project tsconfig.json ./build.ts",
-    "dev": "ts-node --project tsconfig.json build.ts dev"
+    "dev": "ts-node --project tsconfig.json build.ts dev",
+    "lint": "npx eslint --config eslint.config.mjs . --fix"
   }
 }
